@@ -1,3 +1,4 @@
+import pickle
 from collections import defaultdict
 
 
@@ -68,13 +69,40 @@ class Trie:
         self._visit_next_node(char='')
 
     def generate_completions(self, prefix):
-        """Returns a list of auto-complete suggestions"""
+        """Return a list of auto-complete suggestions"""
         self._reset_for_auto_complete()
         for char in prefix:
             if self._no_match:
                 break
             self._generate_completions_by_char(char)
         return self._suggestions_along_path
+
+    def save(self, filepath):
+        """Serialize and save the Trie object as a pickle file.
+
+        Arguments
+        ---------
+        filepath: str
+            Path of the pickled file to be saved, relative to current directory.
+        """
+        with open(filepath, 'wb') as output_file:
+            pickle.dump(self, output_file)
+
+    @classmethod
+    def load(cls, filepath):
+        """Load an instance of a Trie from a pickled file.
+        An object can be instantiated from a saved file in a single step, e.g.:
+        myTrie = Trie().load('saved_trie_data_model.pkl')
+
+        Arguments
+        ---------
+        filepath: str
+            Path of the pickled file to be saved, relative to current directory.
+        """
+        trie_obj = cls()
+        with open(filepath, 'rb') as input_file:
+            trie_obj = pickle.load(input_file)
+        return trie_obj
         
     def _visit_next_node(self, char):
         """Move to the node with label char from the current node, creating it first if it doesn't exist."""
@@ -91,7 +119,7 @@ class Trie:
         self._current_node = next_node  # set current node to node with .label == char
         
     def _create_new_branch(self, char):
-        """Creates a new branch for inserting the rest of the response since the current node
+        """Create a new branch for inserting the rest of the response since the current node
         has no child node with .label == char.
         """
         if self._current_node.has_single_child:  # path upto current node has not branched yet
