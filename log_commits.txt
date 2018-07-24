@@ -1,0 +1,107 @@
+commit cb145c46a222726d0261976dfa68d907947ff1c3
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:27:46 2018 -0700
+
+    Added readme documentation
+
+commit 55ecd72aeebedf7e1db68b2cb221285f44dc9246
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:27:05 2018 -0700
+
+    added answers to follow-up questions
+
+commit 63f1f19d145eb44de5c0578ddcac007e034bbd1d
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:26:17 2018 -0700
+
+    Added module that contains functions to build the data model based on the normalized responses and the Trie class
+
+commit 7a7a7fc684c4d94289c848b560d9ac63101c6f5a
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:24:38 2018 -0700
+
+    added main script to create the data model and launch the server.
+
+commit 8891d1d5c7bfd37c1f8fb94389ca3462a0351818
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:09:41 2018 -0700
+
+    code formatting changes
+
+commit 169f9140aeea0d380342939932173e314d06e4f4
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:09:14 2018 -0700
+
+    code formatting changes
+
+commit 1793e7e1af44affea1e4b622640fea08bf518680
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:09:02 2018 -0700
+
+    code formatting changes
+
+commit 04b5d7aab53198699cb75d28510d4a079289ce79
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Tue Jul 24 01:08:24 2018 -0700
+
+    code formatting changes
+
+commit 5f485bf430e4ab27eca69f0c61ea765970f1c502
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Mon Jul 23 22:30:36 2018 -0700
+
+    added sample caonversations in a data directory
+
+commit 947be43ecdb70ef2476c8f7cd6a4a9836ed8a9cf
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Mon Jul 23 22:25:08 2018 -0700
+
+    added tests to check that the normalize_responses module produces the expected signature for responses
+
+commit 37b9fe69d710134dbd726672cc2d720b734750dd
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Mon Jul 23 22:19:51 2018 -0700
+
+    added tests for the methods of the trie
+
+commit c78e3867d8801685ef055c4d5a0ffabc769fee54
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Mon Jul 23 22:14:20 2018 -0700
+
+    added module to normalize agent responses
+
+commit 6563c879dcfa4183cecbbd11e7f0162e0762dce2
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Mon Jul 23 22:12:36 2018 -0700
+
+    added method _store_substring that stores autocomplete suggestions consisting of prefix substrings (incomplete parts of sentences) and serving them as suggestions
+
+commit ef113c0823a8a11f45decfcaf130c449bed7fa11
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Fri Jul 20 02:07:23 2018 -0700
+
+    added methods to save and load a trie data model
+
+commit c8e7f5cddc53aa9557de688bfeafdc4c1d5c1a31
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Fri Jul 20 01:23:42 2018 -0700
+
+    added module containing functions normalize customer service agent response text.
+
+commit c538c6b97a336618e8c4e25f6af21a199140bf34
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Thu Jul 19 01:47:10 2018 -0700
+
+    Added methods to the Trie class to insert strings into the trie and to find matching strings by traversing nodes along the path of an input prefix.  Also added method to TrieNode class to generate suggestions for autocomplete at a node.
+
+commit e781db67bf4cd67dd42440e825db6cd0158adcba
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Wed Jul 18 21:27:50 2018 -0700
+
+    added basic code to instantiate TrieNode and Trie class objects
+
+commit 3c371394340ac51752e393d3305045cbace041d4
+Author: Kunal Kotian <k.a.kotian@gmail.com>
+Date:   Wed Jul 18 21:26:22 2018 -0700
+
+    added placeholder readme file
