@@ -1,3 +1,7 @@
+"""Unit tests for testing the trie's implementation.
+"""
+
+
 import sys
 sys.path.append("..")   # add the dir one level up to the modules path
 
