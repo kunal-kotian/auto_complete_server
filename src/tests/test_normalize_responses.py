@@ -1,3 +1,8 @@
+"""Unit test to check that the normalize_responses module 
+produces the expected signature for responses.
+"""
+
+
 import sys
 sys.path.append("..")   # add the dir one level up to the modules path
 
