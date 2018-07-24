@@ -12,16 +12,16 @@ def get_signature_to_text_map(responses):
     """Returns a dict mapping a sentence-signature to multiple sentences 
     matching the signature.  
     A signature is constructed for each sentence in the responses corpus.
-    The idea here is that sentences with the same signature must be very similar
-    and can be treated as repeated occurrences of the same sentence.
-    Multiple sentences matching a signature are each represented as repeated 
-    occurrences of a normalized version of the sentence.
+    The idea here is that sentences with the same signature must be very
+    similar and can be treated as repeated occurrences of the same sentence.  
+    Multiple sentences matching a signature are each represented as 
+    repeated occurrences of a normalized version of the sentence.
     
     Arguments
     ---------
     responses: list
-        A list of strings, each representing a customer service agent response.
-        Each individual response string may consist of one or more sentences.
+        List of strings representing a customer service agent responses.
+        Each response string may consist of one or more sentences.
         
     Example:
         Agent response: "What problems are you experiencing?"
@@ -47,13 +47,13 @@ def get_signature_to_text_map(responses):
 
 
 def get_signature_n_normalized(sent):
-    """Returns a tuple of 2 strings representing the signature and 
-    the normalized form of the input sentence. 
-    The signature is constructed from the lemmatized word tokens in the sentence. 
-    The normalized form is obtained from SpaCy's token.norm_ attribute which stores 
-    a lower-cased form of the word token, unifies differences in spellings 
-    ('colour' -> 'color'), and replaces some common slang ('gotta' -> 'got to').
-    Numbers are replaced by 'NUM' in the signature as well as the normalized form.
+    """Returns a tuple of 2 strings representing the signature and the 
+    normalized form of the input sentence. The signature is constructed
+    from the lemmatized word tokens in the sentence. The normalized 
+    form is obtained from SpaCy's token.norm_ attribute which stores a 
+    lower-cased form of the word token, unifies differences in spellings 
+    ('colour' -> 'color'), and replaces common slang ('gotta' > 'got to').
+    Numbers are replaced by 'NUM' in the signature and the normalized form.
     
     Arguments
     ---------
@@ -70,8 +70,9 @@ def get_signature_n_normalized(sent):
                 normalized.append('NUM')
             else:
                 signature.append(token.lemma_)
-                if get_norm(token) == 'moment' and normalized and normalized[-1] == 'NUM':
-                    # 'one moment' is a common phrase used in customer service.
+                if (get_norm(token) == 'moment' and 
+                    normalized and normalized[-1] == 'NUM'):
+                    # 'one moment' is a common phrase in customer service.
                     # Here, replacement of 'one' with 'NUM' must be undone.
                     normalized[-1] = 'one'
                 normalized.append(get_norm(token))
@@ -81,8 +82,8 @@ def get_signature_n_normalized(sent):
 
 
 def satisfies_conditions(token):
-    """Return a boolean indicating whether the token satisfies the following conditions:
-    The token must not represent any of these: 
+    """Return a boolean indicating whether the token satisfies the 
+    following conditions: The token must not represent any of these: 
     1. space, 2. punctuation, 3. an interjection, 4. proper noun
     
     Arguments
