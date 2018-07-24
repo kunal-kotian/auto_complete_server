@@ -1,3 +1,9 @@
+"""Contains the Trie and TrieNode classes that are used to build the 
+auto-complete data model.
+"""
+
+__author__ = 'Kunal Kotian'
+
 import sys
 import pickle
 from collections import defaultdict
@@ -73,7 +79,8 @@ class Trie:
     root: TrieNode object
         The root node of the trie.
     """
-    def __init__(self, max_suggestions=3, min_words_partial=4, is_loaded=False):
+    def __init__(self, max_suggestions=3, min_words_partial=4, 
+                 is_loaded=False):
         # avoid over-writing attributes when loading saved trie
         if not is_loaded:
             self.max_suggestions = max_suggestions
@@ -108,6 +115,9 @@ class Trie:
 
         Arguments
         ---------
+        prefix: str
+            The input prefix for which auto-complete suggestions
+            are to be generated.
         """
         self._reset_for_auto_complete()
         for char in prefix:
@@ -122,7 +132,7 @@ class Trie:
         Arguments
         ---------
         filepath: str
-            Path of the pickled file to be saved, relative to current directory.
+            Path of the pickled file to be saved, relative to current dir.
         """
         LIMIT = 10000  # maximum depth of the Python interpreter stack
         sys.setrecursionlimit(LIMIT)  # required for pickling the trie
@@ -132,13 +142,13 @@ class Trie:
     @classmethod
     def load(cls, filepath):
         """Load an instance of a Trie from a pickled file.
-        An object can be instantiated from a saved file in a single step, e.g.:
+        An object can be instantiated from a saved file directly, e.g.:
         myTrie = Trie().load('saved_trie_data_model.pkl')
 
         Arguments
         ---------
         filepath: str
-            Path of the pickled file to be saved, relative to current directory.
+            Path of the pickled file to be saved, relative to current dir.
         """
         trie_obj = cls(is_loaded=True)
         with open(filepath, 'rb') as input_file:
@@ -146,7 +156,9 @@ class Trie:
         return trie_obj
         
     def _visit_next_node(self, char):
-        """Move to the node with label char from the current node, creating it first if it doesn't exist."""
+        """Move to the node with label char from the current node, 
+        creating it first if it doesn't exist.
+        """
         if self._current_node.response_count:
             # update path response counter if a response counter was 
             # stored (in a previous traversal) at current node
@@ -155,12 +167,13 @@ class Trie:
             # no child nodes exist; create new child node for char
             self._current_node.children[char] = TrieNode(char)
         elif char not in self._current_node.children:
-            self._create_new_branch(char) # create new branch to insert rest of the response
+            # create new branch to insert rest of the response:
+            self._create_new_branch(char)
         next_node = self._current_node.children[char]
         self._store_response_next_node(next_node)
         if self._current_node.response_count:
             self._nodes_with_response.append(self._current_node)
-        self._current_node = next_node  # set current node to node with .label == char
+        self._current_node = next_node  # set current node to next node
         
     def _create_new_branch(self, char):
         """Create a new branch for inserting the rest of the response. 
@@ -184,7 +197,8 @@ class Trie:
         """
         if self._current_node.label != ' ':
             # condition above ensures stored substrings contain whole words
-            # avoids prefixes like 'when w', allows 'when was', 'when will', etc.
+            # avoids prefixes like 'when w', 
+            # allows 'when was', 'when will', etc.
             return
         inserted_words = self._inserted_chars.strip().split(' ')
         if len(inserted_words) < self.min_words_partial:
@@ -201,11 +215,12 @@ class Trie:
             node.generate_suggestions(self.max_suggestions)
         
     def _store_response_single_child(self, single_child):
-        """Store all response strings, along current path at single_child, after 
-        removing current response.  These will serve as the basis for auto-complete 
-        suggestions when a prefix traversal reaches single_child.  Note: When the 
-        current node is the root node, then since every child of the root always has 
-        the response string stored already, this method is bypassed.
+        """Store all response strings, along current path at single_child, 
+        after removing current response.  These will serve as the basis 
+        for auto-complete suggestions when a prefix traversal reaches 
+        single_child.  Note: When the current node is the root node, then 
+        since every child of the root always has the response string 
+        stored already, this method is bypassed.
 
         single_child is the sole existing child node for the current_node.
         """
@@ -216,39 +231,46 @@ class Trie:
         single_child.generate_suggestions(self.max_suggestions)
 
     def _store_response_next_node(self, next_node):
-        """Information on the response is stored in .response_count and .suggestions attributes 
-        which are set only for a next_node whose *parent* is 
-        (1) the root node: at root, all inserted responses are stored or 
-        (2) a node with multiple children: this indicates that multiple different response matches exist 
-        beyond parent node, hence we update autocomplete suggestions beyond parent node"""
-        if (self._current_node is not self.root) and (self._current_node.has_single_child):
+        """Information on the response is stored in response_count and 
+        suggestions attributes which are set only for a next_node whose
+         *parent* is:
+        (1) the root node: at root, all inserted responses are stored, or 
+        (2) a node with multiple children: this indicates that multiple 
+            different response matches exist beyond parent node, hence 
+            we update autocomplete suggestions beyond parent node
+            """
+        if ((self._current_node is not self.root) and 
+            (self._current_node.has_single_child)):
             return
         self._store_substring()   # store shared prefix substrings
-        # create or update a counter of response strings added to the trie that passed through this node
+        # create or update a counter of response strings added to the 
+        # trie that passed through this node
         next_node.response_count[self._response] += 1
         next_node.generate_suggestions(self.max_suggestions)
 
     def _reset_for_auto_complete(self):
-        """Resets the trie to a state in which it expects the next char passed to its auto_complete()
-        method to be part of a new input string to be matched.  This method must be called before the start 
-        of streaming a new string to auto_complete().
+        """Resets the trie to a state in which it expects the next char 
+        passed to its auto_complete() method to be part of a new input 
+        string to be matched.  This method must be called before the 
+        start of streaming a new string to auto_complete().
         """
         self._current_node = self.root
-        # initialize a suggestions list to be updated along node traversal path:
+        # initialize suggestions list updated along node traversal path:
         self._suggestions_along_path = []
-        self._no_match = False  # flag indicating if no matching response exists
+        self._no_match = False  # flag indicating no matching response
         
     def _generate_completions_by_char(self, char):
-        """Sets _suggestions_along_path to a list of auto-complete suggestions for char. 
-        char is a character in the input prefix which is streamed to this method
-        sequentially in the order it appears in the response string.
+        """Sets _suggestions_along_path to a list of auto-complete 
+        suggestions for char. char is a character in the input prefix 
+        which is streamed to this method sequentially in the order it 
+        appears in the response string.
         """
         try:
             next_node = self._current_node.children[char]
-            if next_node.suggestions:   # check if next_node has updated suggestions
+            # check if next_node has updated suggestions
+            if next_node.suggestions:
                 self._suggestions_along_path = next_node.suggestions
             self._current_node = next_node
         except KeyError:
             self._no_match = True
             self._suggestions_along_path = []
-
