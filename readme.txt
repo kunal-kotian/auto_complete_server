@@ -13,7 +13,7 @@ I wrote this auto-complete server code based on the 'Trie' or 'Prefix tree' data
     The Trie was required to generate auto-complete predictions with the inputs consisted of single words.
     I used this as a starting point and modified the code to make the Trie I implemented for this work more space efficient.
 
-I estimate that took me about 10 hours (excluding writing this readme file) to complete the work.
+I estimate that it took me about 10 hours (excluding writing this readme file) to complete the work.
 
 
 Goals and Outcomes:
