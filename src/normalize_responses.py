@@ -98,7 +98,7 @@ def satisfies_conditions(token):
 def get_norm(token):
     """Returns a string representing the normalized form of a word token 
     using SpaCy's tokenizer.  The tokenizer returns inappropriate normal 
-    forms for a few words. These are overriden manually in this function.
+    forms for a few words - these are overriden manually in this function.
     
     Arguments
     ---------
