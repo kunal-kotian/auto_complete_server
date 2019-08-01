@@ -1,5 +1,5 @@
-ASAPP NLP / ML Engineering Challenge
-====================================
+ NLP / ML Engineering Challenge
+================================
 
 Kunal Kotian, July 23, 2018
 
@@ -43,7 +43,7 @@ The idea behind this was that perhaps the front-end of the application providing
 Directory structure:
 -------------------
 
-ASAPP_auto_complete
+*****_auto_complete
  |
  |--readme.txt
  |
